@@ -1,0 +1,5 @@
+== Usage
+  $('#slider').slider({width: 1100});
+  
+== Demo
+  http://creadroid.github.com/slider
