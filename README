@@ -4,7 +4,7 @@
   $('#slider').coverslide({width: 1100});
   
 == Demo
-  http://creadroid.github.com/slider
+  http://creadroid.github.com/jquery.coverslide
   
 == License
   Licenced under Creative Commons Attribution-ShareAlike 3.0 Unported
