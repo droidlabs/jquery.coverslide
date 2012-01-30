@@ -5,7 +5,7 @@
     return { width: width, height: height }
   }
   
-  $.fn.slider = function (options) {
+  $.fn.coverslide = function (options) {
     $(this).each(function () {
       options = $.extend({}, {
         'height': 600,
@@ -118,6 +118,7 @@
       $arrowRight.css('right', 0);
       $arrowLeft.css('left', 0);
       
+      // Click Right arrow
       $arrowRight.on('click', function () {
         $items = $gallery.children('li');
         var $left = $items.filter('.left'),
@@ -159,7 +160,53 @@
             $(this).css('z-index', 10 + position);
           })
         });
-      })
+      });
+      
+      // Click Left arrow
+      $arrowLeft.on('click', function () {
+        $items = $gallery.children('li');
+        var $left = $items.filter('.left'),
+            $right = $items.filter('.right'),
+            $center = $items.filter('.center').first(),
+            $leftLast = $left.last(),
+            $rightLast = $right.last();
+
+        // move last item
+        $rightLast.animate({right: 300}, 400, function () {
+          $(this).removeClass('right').addClass('left').css('z-index', 0)
+          $(this).insertBefore($left.first()).css('left', 300).css('right', 'auto').animate({left: 0});
+        });
+        // move center image
+        $center.each(function () {
+          $(this).removeClass('center').addClass('right');
+          var offset = (imgCountRight - 1) * options.rightOffsetPerItem;
+          $(this).css('right', $(this).css('left')).css('left', 'auto')
+          $(this).animate({right: offset}, 300).css('z-index', 10 + imgCountRight);
+        });
+        // move last left image to center
+        $leftLast.each(function () {
+          var offset = (options.width / 2) - ($(this).width() / 2),
+              animateLeft = parseInt($(this).css('left'), 10) - ($(this).width() / 2),
+              animateRight = (options.width - animateLeft) - $(this).width();
+          $(this).animate({left: animateLeft}, 150, function () {
+            $(this).css('right', animateRight).css('left', 'auto');
+            $(this).animate({right: offset}).css('z-index', 10 + imgCountRight + 1);
+          });
+          $(this).removeClass('left').addClass('center');
+        })
+        // move left and right items
+        $left.add($right).not($rightLast).not($leftLast).each(function () {
+          var align = $(this).is('.left') ? 'left' : 'right',
+              index = $(this).index(),
+              position = align == 'left' ? index + 1 : (imgCount - index - 2),
+              offset = position * options[align + 'OffsetPerItem'],
+              animation = {}
+          animation[align] = offset
+          $(this).animate(animation, 300, function () {
+            $(this).css('z-index', 10 + position);
+          })
+        });
+      });
     });
   }
   $.imgpreload = function (imgs, callback) {
