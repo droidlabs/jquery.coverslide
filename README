@@ -1,5 +1,11 @@
+= CoverSlide Beta =
+
 == Usage
-  $('#slider').slider({width: 1100});
+  $('#slider').coverslide({width: 1100});
   
 == Demo
   http://creadroid.github.com/slider
+  
+== License
+  Licenced under Creative Commons Attribution-ShareAlike 3.0 Unported
+  http://creativecommons.org/licenses/by-sa/3.0/
