@@ -1,3 +1,9 @@
+//
+// jQuery Coverslide Plugin
+// https://github.com/droidlabs/jquery.coverslide
+// Copyright (c) 2011-2012 Droid Labs
+// Licenced under [MIT](http://www.opensource.org/licenses/mit-license.php).
+//
 (function ($) {
   calculateProportionalSize = function (width, height) {
     if (width > height) width = height;
